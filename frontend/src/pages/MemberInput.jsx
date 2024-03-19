@@ -4,6 +4,7 @@ import { PuffLoader } from "react-spinners";
 import { useRef, useState } from "react";
 import { createNewMember, fetchAllDirectorsData } from "../util/https";
 import FindMember from "../elements/FindMember";
+import ErrorBanner from "../elements/ErrorBanner";
 
 export default function MemberInput() {
   const [isOldMember, setIsOldMember] = useState(false);
@@ -69,12 +70,7 @@ export default function MemberInput() {
   let content;
 
   if (isError) {
-    content = (
-      <div>
-        Oh No Error
-        {error.info?.message || "Failed to Fetch Data"}
-      </div>
-    );
+    content = <ErrorBanner message={error.info?.message}></ErrorBanner>;
   }
 
   return (

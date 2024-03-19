@@ -3,6 +3,7 @@ import { PuffLoader } from "react-spinners";
 import { TableTanStack } from "../elements/TableTanStack";
 import { fetchAllMembersData } from "../util/https";
 import LoadingModal from "../elements/LoadingModal";
+import ErrorBanner from "../elements/ErrorBanner";
 
 export default function HomePage() {
   const { isLoading, isError, data, error, refetch } = useQuery({
@@ -16,7 +17,7 @@ export default function HomePage() {
         <PuffLoader color="#36d7b7" />
       </LoadingModal>
     );
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) return <ErrorBanner message={error.info?.message}></ErrorBanner>;
   return (
     <>
       <div className="p-7 text-xl font-semibold flex-1 h-full ml-auto overflow-y-auto">

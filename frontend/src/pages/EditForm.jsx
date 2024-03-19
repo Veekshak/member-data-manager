@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import LoadingModal from "../elements/LoadingModal";
+import ErrorBanner from "../elements/ErrorBanner";
 import { PuffLoader } from "react-spinners";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -90,12 +91,7 @@ export default function EditForm() {
   let content;
 
   if (isError) {
-    content = (
-      <div>
-        Oh No Error
-        {error.info?.message || "Failed to Fetch Data"}
-      </div>
-    );
+    content = <ErrorBanner message={error.info?.message}></ErrorBanner>;
   }
 
   return (
