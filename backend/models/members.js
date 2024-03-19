@@ -1,4 +1,9 @@
 import db from "../util/database.js";
+import { config } from "dotenv";
+
+config({
+  path: "../config.env",
+});
 export default class Members {
   constructor(
     id,
@@ -22,14 +27,14 @@ export default class Members {
 
   deleteById(id) {
     return db.execute(
-      "DELETE from `members-table-1` WHERE `members-table-1`.id = ?",
+      `DELETE from \`${process.env.TABLE_NAME}\` WHERE \`${process.env.TABLE_NAME}\`.id = ?`,
       [id]
     );
   }
 
   updateById(id) {
     return db.execute(
-      "UPDATE `members-table-1` SET id=?, name=?, address=?, phone_number=?, father_name=?, date=?, cur_state=?, dir=? WHERE `members-table-1`.id = ?",
+      `UPDATE \`${process.env.TABLE_NAME}\` SET id=?, name=?, address=?, phone_number=?, father_name=?, date=?, cur_state=?, dir=? WHERE \`${process.env.TABLE_NAME}\`.id = ?`,
       [
         this.id,
         this.name,
@@ -46,14 +51,14 @@ export default class Members {
 
   fetchById(id) {
     return db.execute(
-      "SELECT * from `members-table-1` WHERE `members-table-1`.id = ?",
+      `SELECT * from \`${process.env.TABLE_NAME}\` WHERE \`${process.env.TABLE_NAME}\`.id = ?`,
       [id]
     );
   }
 
   save() {
     return db.execute(
-      "INSERT INTO `members-table-1` (id,name,address,phone_number,father_name,date,cur_state,dir) VALUES (?,?,?,?,?,?,?,?)",
+      `INSERT INTO \`${process.env.TABLE_NAME}\` (id,name,address,phone_number,father_name,date,cur_state,dir) VALUES (?,?,?,?,?,?,?,?)`,
       [
         this.id,
         this.name,
@@ -69,11 +74,14 @@ export default class Members {
 
   fetchAllDir() {
     return db.execute(
-      "SELECT name, dir FROM `members-table-1` WHERE `members-table-1`.cur_state=? ORDER BY id",["director"]
+      `SELECT name, dir FROM \`${process.env.TABLE_NAME}\` WHERE \`${process.env.TABLE_NAME}\`.cur_state=? ORDER BY id`,
+      ["director"]
     );
   }
 
   fetchAll() {
-    return db.execute("SELECT * FROM `members-table-1` ORDER BY id");
+    return db.execute(
+      `SELECT * FROM \`${process.env.TABLE_NAME}\` ORDER BY id`
+    );
   }
 }
